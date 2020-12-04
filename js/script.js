@@ -5,8 +5,8 @@ let menu = [
 	{ nama: 'White Water', kategori: 'drink', harga: 3636, foto: 'NestlePureLifeWater.png'},
 	{ nama: 'Cola', kategori: 'drink', harga: 5454, foto: 'CocaCola.png'},
 	{ nama: 'Sprite', kategori: 'drink', harga: 5454, foto: 'Sprite.png'},
-	{ nama: 'Pancakes', kategori: 'snack', harga: 36363, foto: 'PancakesandSausages.png'},
-	{ nama: 'Chicken Nugget', kategori: 'snack', harga: 36363, foto: 'ChickenNuggets.png'}
+	{ nama: 'Pancakes', kategori: 'snack', harga: 9090, foto: 'PancakesandSausages.png'},
+	{ nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png'}
 ]
 
 function loadData(){
@@ -18,7 +18,7 @@ function loadMenu(){
 	var data_drink = ''
 	var data_snack = ''
 	for (i in menu){
-		var data_menu = `<div class="col-6 my-2">
+		var data_menu = `<div class="col-6 my-2" onClick="setPage('cart')">
 								<div class="menu card">
 									<img class="card-img-top" src="img/menu/`+menu[i].foto+`" alt="Card image cap">
 									<div class="card-body">
@@ -44,24 +44,44 @@ function setPage(menu) {
     if (menu == "home") {
         $('#home').show()
         $('#menu').hide()
-        $('#cart').hide()
+        $('#order').hide()
         $('#account').hide()
+        $('#cart').hide()
+
+        $('#nav').show()
     } else if (menu == "menu") {
     	loadMenu()
         $('#home').hide()
         $('#menu').show()
-        $('#cart').hide()
+        $('#order').hide()
         $('#account').hide()
-    } else if (menu == "cart") {
+        $('#cart').hide()
+
+        $('#nav').show()
+    } else if (menu == "order") {
         $('#home').hide()
         $('#menu').hide()
-        $('#cart').show()
+        $('#order').show()
         $('#account').hide()
+        $('#cart').hide()
+
+        $('#nav').show()
     } else if (menu == "account") {
         $('#home').hide()
         $('#menu').hide()
-        $('#cart').hide()
+        $('#order').hide()
         $('#account').show()
+        $('#cart').hide()
+
+        $('#nav').show()
+    } else if (menu == "cart") {
+        $('#home').hide()
+        $('#menu').hide()
+        $('#order').hide()
+        $('#account').hide()
+        $('#cart').show()
+
+        $('#nav').hide()
     }
 }
 
