@@ -49,6 +49,7 @@ function setPage(menu) {
         $('#cart').hide()
 
         $('#nav').show()
+        $('#order-btn').hide()
     } else if (menu == "menu") {
     	loadMenu()
         $('#home').hide()
@@ -58,6 +59,7 @@ function setPage(menu) {
         $('#cart').hide()
 
         $('#nav').show()
+        $('#order-btn').hide()
     } else if (menu == "order") {
         $('#home').hide()
         $('#menu').hide()
@@ -66,6 +68,7 @@ function setPage(menu) {
         $('#cart').hide()
 
         $('#nav').show()
+        $('#order-btn').hide()
     } else if (menu == "account") {
         $('#home').hide()
         $('#menu').hide()
@@ -74,6 +77,7 @@ function setPage(menu) {
         $('#cart').hide()
 
         $('#nav').show()
+        $('#order-btn').hide()
     } else if (menu == "cart") {
         $('#home').hide()
         $('#menu').hide()
@@ -82,6 +86,7 @@ function setPage(menu) {
         $('#cart').show()
 
         $('#nav').hide()
+        $('#order-btn').show()
     }
 }
 
