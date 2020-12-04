@@ -1,0 +1,50 @@
+body {
+  background: #607D8B
+}
+.text-brown {
+  color: #795548;
+}
+#app {
+  background: white;
+  position: relative;
+  width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  min-height: 100vh;
+  padding-bottom:60px;
+}
+.navbar {
+  width: 480px;
+  position: fixed;
+  bottom: 0;
+  display: block
+}
+.nav-home {
+  padding: 15px 10px;
+}
+h3.page-title {
+  font-weight: bold;
+  padding: 15px 10px;
+}
+.menu-wrapper {
+  margin: 10px;
+}
+.menu-section-title {
+  width: 100%;
+  padding: 0 10px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+.menu-name {
+  font-size: 1em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.menu.card .card-body{
+  padding: 0.5rem;
+}
+@media (max-width: 480px){
+  #app, .navbar {
+    width: 100%
+  }
+}
