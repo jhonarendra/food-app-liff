@@ -83,7 +83,18 @@ function lihatData(id) {
  
  
 function simpanData() {
- 
+    if (!liff.isInClient()) {
+        sendAlertIfNotInClient();
+    } else {
+        liff.sendMessages([{
+            'type': 'text',
+            'text': "Catatan berhasil disimpan"
+        }]).then(function() {
+            alert('Catatan Tersimpan');
+        }).catch(function(error) {
+            alert('Error');
+        });
+    }
     nama = $('#nama').val();
     tanggal = $('#tanggal').val();
     agenda = $('#agenda').val();
@@ -108,7 +119,18 @@ function simpanData() {
 }
  
 function simpanEditData() {
- 
+    if (!liff.isInClient()) {
+        sendAlertIfNotInClient();
+    } else {
+        liff.sendMessages([{
+            'type': 'text',
+            'text': "Catatan tersimpan"
+        }]).then(function() {
+            alert('Catatan tersimpan');
+        }).catch(function(error) {
+            alert('Error');
+        });
+    }
     id_data = $('#eid_data').val();
     nama = $('#enama').val();
     tanggal = $('#etanggal').val();
@@ -123,7 +145,18 @@ function simpanEditData() {
 }
  
 function hapusData(id) {
- 
+    if (!liff.isInClient()) {
+        sendAlertIfNotInClient();
+    } else {
+        liff.sendMessages([{
+            'type': 'text',
+            'text': "Catatan terhapus"
+        }]).then(function() {
+            alert('Catatan dihapus');
+        }).catch(function(error) {
+            alert('Error');
+        });
+    }
     if (localStorage.list_data && localStorage.id_data) {
         list_data = JSON.parse(localStorage.getItem('list_data'));
  
