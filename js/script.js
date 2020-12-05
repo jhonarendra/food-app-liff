@@ -167,7 +167,12 @@ function loadProfile(){
 		    $("#profile-status-msg").html(profile.statusMessage)
 
 		    $("#profile-os").html(liff.getOS())
-		    $("#profile-line-v").html(liff.getLineVersion())
+		    if (liff.isInClient()) {
+		    	$("#profile-line-v").html(liff.getLineVersion())
+		    } else {
+		    	$("#profile-line-v").html('<small><i>Tidak terbuka di LINE</i></small>')
+		    }
+		    
 		}).catch(function(error) {
 		    window.alert('Error: ' + error);
 		});
@@ -437,15 +442,15 @@ function liffLogin(){
 
 function liffLogout(){
 	if (liff.isLoggedIn()) {
+		if (liff.isInClient()) {
+			liff.sendMessages([{
+			    'type': 'text',
+			    'text': "Anda berhasil keluar dari aplikasi. Sampai jumpa kembali."
+			}]).catch(function(error) {
+			    window.alert('Error sending message: ' + error);
+			})
+		}
 	    liff.logout()
-	    if (liff.isInClient()) {
-	    	liff.sendMessages([{
-	    	    'type': 'text',
-	    	    'text': "Anda berhasil keluar dari aplikasi. Sampai jumpa kembali."
-	    	}]).catch(function(error) {
-	    	    window.alert('Error sending message: ' + error);
-	    	})
-	    }
 	    window.location.reload()
 	}
 }
