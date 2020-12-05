@@ -9,6 +9,8 @@ let menu = [
 	{ id: 8, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png'}
 ]
 
+let user = {}
+
 function loadData(){
 	setPage('home')
 	initialLoad()
@@ -18,6 +20,7 @@ function initialLoad(){
 	if (!localStorage.menu){
 		localStorage.setItem('menu', JSON.stringify(menu))
 	}
+	loadProfile()
 	
 }
 function loadMenu(){
@@ -160,7 +163,7 @@ function loadProfile(){
 		$("#profile-wrapper").show()
 		$("#not-login").hide()
 		liff.getProfile().then(function(profile) {
-			console.log(profile)
+			user = profile
 		    $('#profile-user-id').html(profile.userId)
 		    $('#profile-display-name').html(profile.displayName)
 		    $('#profile-photo img').attr('src', profile.pictureUrl)
@@ -310,11 +313,7 @@ function addOrder(){
 		// Jhonarendra membuat pesanan baru! Burger 2, Pancake 3, Sprite 4 dengan total pesanan Rp 200.000
 		var msg_order = ''
 		if (liff.isLoggedIn()) {
-			liff.getProfile().then(function(profile) {
-				msg_order += profile.displayName + ' membuat pesanan baru! '
-			}).catch(function(error) {
-			    window.alert('Error: ' + error);
-			})
+			msg_order += user.displayName + ' membuat pesanan baru! '
 		} else {
 			msg_order += 'Anda membuat pesanan baru! '
 		}
