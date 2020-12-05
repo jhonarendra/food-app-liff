@@ -56,11 +56,14 @@ h3.page-title {
   border-top: 1px solid #ccc;
   position: fixed;
   bottom:0;
-  width: 100%;
+  width: inherit;
   padding: 15px;
 }
 #order-btn button {
   font-weight: bold;
+}
+.btn-cart-action {
+  font-size: .2rem
 }
 @media (max-width: 480px){
   #app, .navbar {

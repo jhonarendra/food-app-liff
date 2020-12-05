@@ -35,9 +35,9 @@
 							<a href="javascript:void(0)" class="text-dark"><b>JOON FOOD</b></a>
 						</div>
 						<div class="col-4 text-right">
-							<div class="cart-wrapper">
+							<div class="cart-wrapper" onclick="setPage('cart')">
 								<i class="fas fa-shopping-cart"></i>
-								<span class="badge badge-danger cart-badge">3</span>
+								<span id="cart_num" class="badge badge-danger cart-badge">3</span>
 							</div>
 						</div>
 					</div>
@@ -194,35 +194,32 @@
 				</div>
 
 				<div class="cart-wrapper m-2">
-					<div class="cart-item row">
-						<div class="col-7">
-							<span class="menu-name">Burger 3</span>
-						</div>
-						<div class="col-2">
-							2
-						</div>
-						<div class="col-3 text-right">
-							45.454
-						</div>
-					</div>
-					<div class="cart-item row">
-						<div class="col-7">
-							<span class="menu-name">Burger Kaya King Kaya</span>
-						</div>
-						<div class="col-2">
-							2
-						</div>
-						<div class="col-3 text-right">
-							5.454
-						</div>
-					</div>
+					<div id="cart-content"></div>
 					<hr />
-					<div class="row">
-						<div class="col-9 text-right">
-							<b>TOTAL</b>
+					<div id="cart-info">
+						<div class="row">
+							<div class="col-9 text-right">
+								<b>PESANAN</b>
+							</div>
+							<div class="col-3 text-right">
+								<span id="total-cart"></span>
+							</div>
 						</div>
-						<div class="col-3 text-right">
-							50.908
+						<div class="row">
+							<div class="col-9 text-right">
+								<b>PPN (10%)</b>
+							</div>
+							<div class="col-3 text-right">
+								<span id="ppn"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-9 text-right">
+								<b>TOTAL BAYAR</b>
+							</div>
+							<div class="col-3 text-right">
+								<b><span id="total-bayar" class="text-success"></span></b>
+							</div>
 						</div>
 					</div>
 				</div>
