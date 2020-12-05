@@ -21,6 +21,9 @@ function initialLoad(){
 		localStorage.setItem('menu', JSON.stringify(menu))
 	}
 	loadProfile()
+	setTimeout(function(){
+		$(".loader").hide()
+	}, 1000)
 	
 }
 function loadMenu(){

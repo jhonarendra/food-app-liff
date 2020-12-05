@@ -82,6 +82,16 @@ h3.page-title {
   font-weight: bold;
   font-size: 1rem
 }
+.loader {
+  height: 100vh;
+  width: inherit;
+  position: fixed;
+  top:0;
+}
+.spinner-wrapper {
+  margin-top: 40vh;
+  font-size: 2rem;
+}
 @media (max-width: 480px){
   #app, .navbar {
     width: 100%
