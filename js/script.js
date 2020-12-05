@@ -12,25 +12,25 @@ let menu = [
 // 	{ nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4}
 // ]
 
-let order = [
-	{
-		id: 1,
-		tanggal: '12-12-2020 23:59:59',
-		menu: [
-			{ id: 2, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4},
-			{ id: 6, nama: 'Sprite', kategori: 'drink', harga: 5454, foto: 'Sprite.png', jumlah: 7}
-		]
-	},
-	{
-		id: 1,
-		tanggal: '12-12-2020 23:59:59',
-		menu: [
-			{ id: 6, nama: 'Sprite', kategori: 'drink', harga: 5454, foto: 'Sprite.png', jumlah: 7},
-			{ id: 2, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4},
-			{ id: 3, nama: 'Burger Keju', kategori: 'food', harga: 36363, foto: 'DoubleCheeseburger.png', jumlah: 14}
-		]
-	}
-]
+// let order = [
+// 	{
+// 		id: 1,
+// 		tanggal: '12-12-2020 23:59:59',
+// 		menu: [
+// 			{ id: 2, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4},
+// 			{ id: 6, nama: 'Sprite', kategori: 'drink', harga: 5454, foto: 'Sprite.png', jumlah: 7}
+// 		]
+// 	},
+// 	{
+// 		id: 1,
+// 		tanggal: '12-12-2020 23:59:59',
+// 		menu: [
+// 			{ id: 6, nama: 'Sprite', kategori: 'drink', harga: 5454, foto: 'Sprite.png', jumlah: 7},
+// 			{ id: 2, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4},
+// 			{ id: 3, nama: 'Burger Keju', kategori: 'food', harga: 36363, foto: 'DoubleCheeseburger.png', jumlah: 14}
+// 		]
+// 	}
+// ]
 
 function loadData(){
 	setPage('home')
@@ -127,47 +127,51 @@ function loadCart(){
 }
 
 function loadOrder(){
+	var order = []
 	var data_order = ''
-	for (i in order){
-		// hitung total dahulu
-		var total_pesanan = 0
-		for (j in order[i].menu){
-			var nominal = order[i].menu[j].jumlah * order[i].menu[j].harga
-			total_pesanan = total_pesanan + nominal
-		}
-		var ppn = parseInt(total_pesanan * 10 / 100)
-		var total_bayar = total_pesanan + ppn
-		data_order += `<div class="order-item my-2" onClick="setPage('cart')">
-						<div class="card">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-3">
-										<img src="img/menu/`+order[i].menu[0].foto+`" class="img-fluid">
+	if (localStorage.order){
+		order = JSON.parse(localStorage.getItem('order'))
+		for (i in order){
+			// hitung total dahulu
+			var total_pesanan = 0
+			for (j in order[i].menu){
+				var nominal = order[i].menu[j].jumlah * order[i].menu[j].harga
+				total_pesanan = total_pesanan + nominal
+			}
+			var ppn = parseInt(total_pesanan * 10 / 100)
+			var total_bayar = total_pesanan + ppn
+			data_order += `<div class="order-item my-2" onClick="setPage('cart')">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-3">
+											<img src="img/menu/`+order[i].menu[0].foto+`" class="img-fluid">
+										</div>
+										<div class="col-9">
+											<h5 class="menu-name">`+order[i].menu[0].nama+`</h5>
+											<p class="menu-price text-right">Rp `+formatRupiah(order[i].menu[0].harga)+` x `+order[i].menu[0].jumlah+`</p>
+											<hr class="m-0" />
+											<p class="text-right"><small>`+order[i].menu.length+` Item</small></p>
+										</div>
+										<div class="col-12">
+										</div>
 									</div>
-									<div class="col-9">
-										<h5 class="menu-name">`+order[i].menu[0].nama+`</h5>
-										<p class="menu-price text-right">Rp `+formatRupiah(order[i].menu[0].harga)+`</p>
-										<hr class="m-0" />
-										<p class="text-right"><small>`+order[i].menu.length+` Item</small></p>
-									</div>
-									<div class="col-12">
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-8 text-right">
-										<b>TOTAL</b>
-									</div>
-									<div class="col-4 text-right">
-										Rp `+formatRupiah(total_bayar)+`
+									<div class="row">
+										<div class="col-8 text-right">
+											<b>TOTAL</b>
+										</div>
+										<div class="col-4 text-right">
+											Rp `+formatRupiah(total_bayar)+`
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>`
+						</div>`
+		}
+	} else {
+		data_order += `<div class="alert alert-warning m-2">Belum ada pesanan dari anda</div>`
 	}
-
 	$("#order-content").html(data_order)
-
 }
 
 function addToCart(id_menu){
@@ -270,6 +274,27 @@ function minNumCart(id_menu){
 		deleteCart(cart_item.id)
 	}
 	loadCart()
+}
+
+function addOrder(){
+	// ambil semua item dari cart, push ke local storage order, kosongkan cart
+	var cart = JSON.parse(localStorage.getItem('cart'))
+	var order = []
+	var order_item = {}
+	var index = 0
+	if (localStorage.order){
+		order = JSON.parse(localStorage.getItem('order'))
+	}
+	var timestamp = new Date
+	order_item = {
+		id: index + 1,
+		tanggal: timestamp,
+		menu: cart
+	}
+	order.push(order_item)
+	localStorage.setItem('order', JSON.stringify(order))
+	localStorage.removeItem('cart')
+	setPage('order')
 }
 
 function setPage(menu) {
