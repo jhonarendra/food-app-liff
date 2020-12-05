@@ -66,9 +66,9 @@ function loadCart(){
 								<span class="menu-name">`+cart[i].nama+`</span>
 							</div>
 							<div class="col-3 px-0">
-								<a href="javascript:void(0)" class="btn btn-sm btn-warning btn-cart-action" title="Kurangi"><i class="fa fa-minus"></i></a>
+								<a href="javascript:void(0)" class="btn btn-sm btn-warning btn-cart-action" title="Kurangi" onClick="minNumCart(`+cart[i].id+`)"><i class="fa fa-minus"></i></a>
 								<span class="px-1">`+cart[i].jumlah+`</span>
-								<a href="javascript:void(0)" class="btn btn-sm btn-success btn-cart-action" title="Tambah"><i class="fa fa-plus"></i></a>
+								<a href="javascript:void(0)" class="btn btn-sm btn-success btn-cart-action" title="Tambah" onClick="addNumCart(`+cart[i].id+`)"><i class="fa fa-plus"></i></a>
 								<a href="javascript:void(0)" class="btn btn-sm btn-danger btn-cart-action" title="Hapus" onClick="deleteCart(`+cart[i].id+`)"><i class="fa fa-trash"></i></a>
 							</div>
 							<div class="col-3 pl-0 text-right">
@@ -162,13 +162,46 @@ function addNumCart(id_menu){
 	var index = 0
 	for (i in cart){
 		if(cart[i].id == id_menu){
+			cart_item = {
+				id: cart[i].id,
+				nama: cart[i].nama,
+				kategori: cart[i].kategori,
+				harga: cart[i].harga,
+				foto: cart[i].foto,
+				jumlah: cart[i].jumlah + 1
+			}
 			cart.splice(index, 1) // dihapus, habis itu push lagi
 		}
 		index++
 	}
+	cart.push(cart_item)
 	localStorage.setItem('cart', JSON.stringify(cart))
-	if(cart.length == 0){
-		localStorage.removeItem('cart')
+	loadCart()
+}
+function minNumCart(id_menu){
+	var cart = JSON.parse(localStorage.getItem('cart'))
+	var cart_item = ''
+	var index = 0
+	for (i in cart){
+		if(cart[i].id == id_menu){
+			cart_item = {
+				id: cart[i].id,
+				nama: cart[i].nama,
+				kategori: cart[i].kategori,
+				harga: cart[i].harga,
+				foto: cart[i].foto,
+				jumlah: cart[i].jumlah - 1
+			}
+			cart.splice(index, 1) // dihapus, habis itu push lagi
+		}
+		index++
+	}
+	cart.push(cart_item)
+	localStorage.setItem('cart', JSON.stringify(cart))
+
+	// kalau 0 hapus dari list
+	if(cart_item.jumlah == 0){
+		deleteCart(cart_item.id)
 	}
 	loadCart()
 }
