@@ -48,6 +48,11 @@ h3.page-title {
   position: absolute;
   bottom:0;
 }
+#cart_num_menu.cart-badge {
+  font-size: .5em;
+  position: absolute;
+  bottom:15px;
+}
 .btn-back {
   font-size: 1.75rem;
   padding: 10px;

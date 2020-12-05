@@ -91,7 +91,17 @@
 				</div>
 			</div>
 			<div id="menu" style="display: none">
-				<h3 class="text-warning page-title mt-3">MENU</h3>
+				<div class="row">
+					<div class="col-8">
+						<h3 class="text-warning page-title mt-3">MENU</h3>
+					</div>
+					<div class="col-4 text-right">
+						<div class="cart-wrapper mt-3 py-3 pr-3" onclick="setPage('cart')" style="position: relative;">
+							<i class="fas fa-shopping-cart"></i>
+							<span id="cart_num_menu" class="badge badge-danger cart-badge">3</span>
+						</div>
+					</div>
+				</div>
 				<div class="alert alert-warning m-2">
 					Klik pada menu untuk menambahkan ke keranjang
 				</div>
@@ -121,61 +131,7 @@
 			</div>
 			<div id="order" style="display: none">
 				<h3 class="text-warning page-title mt-3">ORDER HISTORY</h3>
-				<div class="order-wrapper">
-					<div class="order-item my-2" onClick="setPage('cart')">
-						<div class="card">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-3">
-										<img src="img/menu/BaconKingJr.png" class="img-fluid">
-									</div>
-									<div class="col-9">
-										<h5 class="menu-name">Burger burgeria</h5>
-										<p class="menu-price text-right">Rp 36.363</p>
-										<hr class="m-0" />
-										<p class="text-right"><small>3 Item</small></p>
-									</div>
-									<div class="col-12">
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-8 text-right">
-										<b>TOTAL PESANAN</b>
-									</div>
-									<div class="col-4 text-right">
-										Rp 54.545
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="order-item my-2" onClick="setPage('cart')">
-						<div class="card">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-3">
-										<img src="img/menu/BaconKingJr.png" class="img-fluid">
-									</div>
-									<div class="col-9">
-										<h5 class="menu-name">Burger burgeria</h5>
-										<p class="menu-price text-right">Rp 36.363</p>
-										<hr class="m-0" />
-										<p class="text-right"><small>3 Item</small></p>
-									</div>
-									<div class="col-12">
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-8 text-right">
-										<b>TOTAL PESANAN</b>
-									</div>
-									<div class="col-4 text-right">
-										Rp 54.545
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div id="order-content" class="order-wrapper">
 				</div>
 			</div>
 			<div id="account" style="display: none">

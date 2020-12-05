@@ -12,6 +12,26 @@ let menu = [
 // 	{ nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4}
 // ]
 
+let order = [
+	{
+		id: 1,
+		tanggal: '12-12-2020 23:59:59',
+		menu: [
+			{ id: 2, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4},
+			{ id: 6, nama: 'Sprite', kategori: 'drink', harga: 5454, foto: 'Sprite.png', jumlah: 7}
+		]
+	},
+	{
+		id: 1,
+		tanggal: '12-12-2020 23:59:59',
+		menu: [
+			{ id: 6, nama: 'Sprite', kategori: 'drink', harga: 5454, foto: 'Sprite.png', jumlah: 7},
+			{ id: 2, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4},
+			{ id: 3, nama: 'Burger Keju', kategori: 'food', harga: 36363, foto: 'DoubleCheeseburger.png', jumlah: 14}
+		]
+	}
+]
+
 function loadData(){
 	setPage('home')
 	initialLoad()
@@ -97,11 +117,57 @@ function loadCart(){
 	// cart icon in home
 	if (!localStorage.cart){
 		$("#cart_num").hide()
+		$("#cart_num_menu").hide()
 	} else {
 		$("#cart_num").show()
+		$("#cart_num_menu").show()
 		$("#cart_num").html(cart.length)
+		$("#cart_num_menu").html(cart.length)
 	}
-	
+}
+
+function loadOrder(){
+	var data_order = ''
+	for (i in order){
+		// hitung total dahulu
+		var total_pesanan = 0
+		for (j in order[i].menu){
+			var nominal = order[i].menu[j].jumlah * order[i].menu[j].harga
+			total_pesanan = total_pesanan + nominal
+		}
+		var ppn = parseInt(total_pesanan * 10 / 100)
+		var total_bayar = total_pesanan + ppn
+		data_order += `<div class="order-item my-2" onClick="setPage('cart')">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-3">
+										<img src="img/menu/`+order[i].menu[0].foto+`" class="img-fluid">
+									</div>
+									<div class="col-9">
+										<h5 class="menu-name">`+order[i].menu[0].nama+`</h5>
+										<p class="menu-price text-right">Rp `+formatRupiah(order[i].menu[0].harga)+`</p>
+										<hr class="m-0" />
+										<p class="text-right"><small>`+order[i].menu.length+` Item</small></p>
+									</div>
+									<div class="col-12">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-8 text-right">
+										<b>TOTAL</b>
+									</div>
+									<div class="col-4 text-right">
+										Rp `+formatRupiah(total_bayar)+`
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>`
+	}
+
+	$("#order-content").html(data_order)
+
 }
 
 function addToCart(id_menu){
@@ -144,7 +210,6 @@ function deleteCart(id_menu){
 	var index = 0
 	for (i in cart){
 		if(cart[i].id == id_menu){
-			console.log(cart[i])
 			cart.splice(index, 1)
 		}
 		index++
@@ -178,6 +243,7 @@ function addNumCart(id_menu){
 	localStorage.setItem('cart', JSON.stringify(cart))
 	loadCart()
 }
+
 function minNumCart(id_menu){
 	var cart = JSON.parse(localStorage.getItem('cart'))
 	var cart_item = ''
@@ -205,6 +271,7 @@ function minNumCart(id_menu){
 	}
 	loadCart()
 }
+
 function setPage(menu) {
     if (menu == "home") {
     	loadCart()
@@ -227,6 +294,7 @@ function setPage(menu) {
         $('#nav').show()
         $('#order-btn').hide()
     } else if (menu == "order") {
+    	loadOrder()
         $('#home').hide()
         $('#menu').hide()
         $('#order').show()
