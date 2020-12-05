@@ -24,9 +24,41 @@ Untuk memulai membuat project LIFF, kita perlu mendaftar ke website line develop
 3. Buat LIFF app pada provider tersebut
 
 ## Code
-Mungkin sedikit penjelasan dari kode, untuk bisa mendaftarkan
-aplikasi, kita perlu memasang sdk liff berupa javascript.
+- Mungkin sedikit penjelasan dari kode, untuk bisa mendaftarkan aplikasi, kita perlu memasang sdk liff berupa javascript.
+```
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+```
+- Kemudian untuk menggunakan api dari liff, dokumentasinya ada di link [LINE Front-end Framework | LINE Developers](https://developers.line.biz/en/docs/liff/overview)
+- Untuk mengubah page, karena menggunakan jquery saja, saya pakai show hide section. Lihat di `script.js` bagian
+```
+function setPage(menu) {
+    if (menu == "home") {
+    	loadCart()
+        $('#home').show()
+        $('#menu').hide()
+        $('#order').hide()
+        $('#account').hide()
+ ...
+    } else if (menu == "order-detail") {
+    	loadCart()
+        $('#home').hide()
+        $('#menu').hide()
+        $('#order').hide()
+        $('#account').hide()
+        $('#cart').hide()
+        $('#order-detail').show()
 
-
-
-
+        $('#nav').hide()
+        $('#order-btn').hide()
+    }
+}
+ ```
+- Lalu untuk penyimpanan data, pakai LocalStorage dari browser. Contoh sintaks seperti ini
+```
+localStorage.setItem('cart', JSON.stringify(cart))
+cart = JSON.parse(localStorage.getItem('cart'))
+```
+## Testing App
+- Testing app melalui web browser bisa mengakses di link https://liff.line.me/1655314108-3YBeQLy4
+- Melalui LINE bisa mengakses LINE OA saya dengan ID `@zrc5584x` (dengan @). Nanti message pembuka akan muncul link aplikasi
+- Atau coba di kolom chat lain dengan mengirim link `line://app/1655314108-3YBeQLy4`
