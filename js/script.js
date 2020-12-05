@@ -168,6 +168,8 @@ function loadProfile(){
 		        pp.removeChild(pp.firstElementChild);
 		    }
 		    const img = document.createElement('img');
+		    img.id = 'profile-photo';
+		    img.class = 'profile-photo';
 		    img.src = profile.pictureUrl;
 		    img.alt = 'Profile Picture';
 		    pp.appendChild(img);
