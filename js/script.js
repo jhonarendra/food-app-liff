@@ -163,17 +163,11 @@ function loadProfile(){
 			console.log(profile)
 		    $('#profile-user-id').html(profile.userId)
 		    $('#profile-display-name').html(profile.displayName)
-
-		    const pp = document.getElementById('profilePictureDiv');
-		    if (pp.firstElementChild) {
-		        pp.removeChild(pp.firstElementChild);
-		    }
-		    const img = document.createElement('img');
-		    img.src = profile.pictureUrl;
-		    img.alt = 'Profile Picture';
-		    pp.appendChild(img);
-
+		    $('#profile-photo img').attr('src', profile.pictureUrl)
 		    $("#profile-status-msg").html(profile.statusMessage)
+
+		    $("#profile-os").html(liff.getOS())
+		    $("#profile-line-v").html(liff.getLineVersion())
 		}).catch(function(error) {
 		    window.alert('Error: ' + error);
 		});
