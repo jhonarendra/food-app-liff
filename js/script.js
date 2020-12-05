@@ -160,16 +160,15 @@ function loadProfile(){
 		$("#profile-wrapper").show()
 		$("#not-login").hide()
 		liff.getProfile().then(function(profile) {
+			console.log(profile)
 		    $('#profile-user-id').html(profile.userId)
 		    $('#profile-display-name').html(profile.displayName)
 
-		    const pp = $('#profile-photo');
+		    const pp = document.getElementById('profilePictureDiv');
 		    if (pp.firstElementChild) {
 		        pp.removeChild(pp.firstElementChild);
 		    }
 		    const img = document.createElement('img');
-		    img.id = 'profile-photo';
-		    img.class = 'profile-photo';
 		    img.src = profile.pictureUrl;
 		    img.alt = 'Profile Picture';
 		    pp.appendChild(img);
