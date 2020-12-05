@@ -311,7 +311,7 @@ function addOrder(){
 		var msg_order = ''
 		if (liff.isLoggedIn()) {
 			liff.getProfile().then(function(profile) {
-				msg_order += user.displayName + ' membuat pesanan baru! '
+				msg_order += profile.displayName + ' membuat pesanan baru! '
 			}).catch(function(error) {
 			    window.alert('Error: ' + error);
 			})
@@ -336,7 +336,7 @@ function addOrder(){
 		}
 		var ppn = parseInt(total_pesanan * 10 / 100)
 		var total_bayar = total_pesanan + ppn
-		msg_order += ' dengan total pesanan Rp ' + formatRupiah(total_bayar)
+		msg_order += ' dengan total pesanan Rp ' + formatRupiah(total_bayar) + '. Terima kasih banyak!'
 
 		
 		if (!liff.isInClient()) {
@@ -429,29 +429,18 @@ function liffCloseApp(){
 function liffLogin(){
 	if (!liff.isLoggedIn()) {
 	    liff.login()
-	    if (liff.isInClient()) {
-	    	liff.sendMessages([{
-	    	    'type': 'text',
-	    	    'text': "Yay! Anda berhasil login ke aplikasi! Terima kasih!"
-	    	}]).catch(function(error) {
-	    	    window.alert('Error sending message: ' + error);
-	    	})
-	    }
 	}
 }
 
 function liffLogout(){
 	if (liff.isLoggedIn()) {
 		if (liff.isInClient()) {
-			liff.sendMessages([{
-			    'type': 'text',
-			    'text': "Anda berhasil keluar dari aplikasi. Sampai jumpa kembali."
-			}]).catch(function(error) {
-			    window.alert('Error sending message: ' + error);
-			})
+			alert('Fitur logout tersedia untuk browser eksternal')
+		} else {
+			liff.logout()
+			window.location.reload()
 		}
-	    liff.logout()
-	    window.location.reload()
+	    
 	}
 }
 
