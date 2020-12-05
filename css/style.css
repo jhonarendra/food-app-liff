@@ -70,6 +70,18 @@ h3.page-title {
 .btn-cart-action {
   font-size: .2rem
 }
+.profile-photo {
+  width: 80px;
+  margin:0 auto;
+}
+.profile-photo img {
+  width: 80px;
+  border-radius: 50%;
+}
+.acc-name {
+  font-weight: bold;
+  font-size: 1rem
+}
 @media (max-width: 480px){
   #app, .navbar {
     width: 100%

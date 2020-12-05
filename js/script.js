@@ -348,6 +348,12 @@ function showOrder(id){
 	$("#total-bayar-order-detail").html(formatRupiah(total_bayar))
 }
 
+function clearTransaction(){
+	localStorage.removeItem('cart')
+	localStorage.removeItem('order')
+	alert('Data transaksi dihapus')
+}
+
 function setPage(menu) {
     if (menu == "home") {
     	loadCart()
@@ -362,6 +368,7 @@ function setPage(menu) {
         $('#order-btn').hide()
     } else if (menu == "menu") {
     	loadMenu()
+    	loadCart()
         $('#home').hide()
         $('#menu').show()
         $('#order').hide()
