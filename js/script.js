@@ -9,6 +9,8 @@ let menu = [
 	{ id: 8, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png'}
 ]
 
+let user = {}
+
 function loadData(){
 	setPage('home')
 	initialLoad()
@@ -161,6 +163,7 @@ function loadProfile(){
 		$("#not-login").hide()
 		liff.getProfile().then(function(profile) {
 			console.log(profile)
+			user = profile
 		    $('#profile-user-id').html(profile.userId)
 		    $('#profile-display-name').html(profile.displayName)
 		    $('#profile-photo img').attr('src', profile.pictureUrl)
@@ -281,24 +284,71 @@ function minNumCart(id_menu){
 
 function addOrder(){
 	// ambil semua item dari cart, push ke local storage order, kosongkan cart
-	var cart = JSON.parse(localStorage.getItem('cart'))
-	var order = []
-	var order_item = {}
-	var index = 0
-	if (localStorage.order){
-		order = JSON.parse(localStorage.getItem('order'))
-		index = order.length
+	if (localStorage.cart){
+		var cart = JSON.parse(localStorage.getItem('cart'))
+		var order = []
+		var order_item = {}
+		var index = 0
+		if (localStorage.order){
+			order = JSON.parse(localStorage.getItem('order'))
+			index = order.length
+		}
+		var timestamp = new Date
+		order_item = {
+			id: index + 1,
+			tanggal: timestamp,
+			menu: cart
+		}
+		order.push(order_item)
+		localStorage.setItem('order', JSON.stringify(order))
+		localStorage.removeItem('cart')
+		setPage('order')
+
+		// message
+		// Jhonarendra membuat pesanan baru! Burger 2, Pancake 3, Sprite 4 dengan total pesanan Rp 200.000
+		var msg_order = ''
+		if(user.displayName){
+			msg_order += user.displayName + ' membuat pesanan baru! '
+		} else {
+			msg_order += 'Anda membuat pesanan baru! '
+		}
+		
+		var total_pesanan = 0
+		for (i in cart){
+			var nominal = cart[i].jumlah * cart[i].harga
+			total_pesanan = total_pesanan + nominal
+
+			msg_order += cart[i].nama + ' (' + cart[i].jumlah + ')'
+			if(i == cart.length - 2){ // mengatasi koma komaan
+				msg_order += ' dan '
+			} else if(i == cart.length - 1){
+				msg_order += ''
+			} else {
+				msg_order += ', '
+			}
+			
+		}
+		var ppn = parseInt(total_pesanan * 10 / 100)
+		var total_bayar = total_pesanan + ppn
+		msg_order += ' dengan total pesanan Rp ' + formatRupiah(total_bayar)
+
+		
+		if (!liff.isInClient()) {
+			alert(msg_order)
+		} else {
+			liff.sendMessages([{
+			    'type': 'text',
+			    'text': msg_order
+			}]).then(function() {
+			    window.alert('Message sent');
+			}).catch(function(error) {
+			    window.alert('Error sending message: ' + error);
+			})
+		}
+		
+	} else {
+		alert('Anda belum memilih menu')
 	}
-	var timestamp = new Date
-	order_item = {
-		id: index + 1,
-		tanggal: timestamp,
-		menu: cart
-	}
-	order.push(order_item)
-	localStorage.setItem('order', JSON.stringify(order))
-	localStorage.removeItem('cart')
-	setPage('order')
 }
 
 function showOrder(id){
@@ -354,29 +404,53 @@ function clearTransaction(){
 }
 
 function liffOpenWindow(){
-	liff.openWindow({
-        url: '',
-        external: true
-    });
+	if (!liff.isInClient()) {
+		alert('Fungsi ini tidak tersedia pada browser eksternal')
+	} else {
+		liff.openWindow({
+	        url: 'https://liff.line.me/1655314108-3YBeQLy4',
+	        external: true
+	    })
+	}
 }
 
 function liffCloseApp(){
 	if (!liff.isInClient()) {
-	    alert('Fungsi ini tidak tersedia pada browser eksternal');
+	    alert('Fungsi ini tidak tersedia pada browser eksternal')
 	} else {
-	    liff.closeWindow();
+	    liff.closeWindow()
 	}
 }
 
 function liffLogin(){
 	if (!liff.isLoggedIn()) {
-	    liff.login();
+	    liff.login()
+	    if (liff.isInClient()) {
+	    	liff.sendMessages([{
+	    	    'type': 'text',
+	    	    'text': "Yay! Anda berhasil login ke aplikasi! Terima kasih!"
+	    	}]).then(function() {
+	    	    window.alert('Message sent');
+	    	}).catch(function(error) {
+	    	    window.alert('Error sending message: ' + error);
+	    	})
+	    }
 	}
 }
 
 function liffLogout(){
 	if (liff.isLoggedIn()) {
-	    liff.logout();
+	    liff.logout()
+	    if (liff.isInClient()) {
+	    	liff.sendMessages([{
+	    	    'type': 'text',
+	    	    'text': "Anda berhasil keluar dari aplikasi. Sampai jumpa kembali."
+	    	}]).then(function() {
+	    	    window.alert('Message sent');
+	    	}).catch(function(error) {
+	    	    window.alert('Error sending message: ' + error);
+	    	})
+	    }
 	    window.location.reload()
 	}
 }
