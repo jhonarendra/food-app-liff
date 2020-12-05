@@ -135,50 +135,62 @@
 				</div>
 			</div>
 			<div id="account" style="display: none">
-				<h3 class="text-warning page-title mt-3">PROFILE</h3>
-				<div class="profile-content">
-					<div class="profile-photo">
-						<img src="apple-touch-icon-180x180.png">
-					</div>
-					<h3 class="acc-name text-center mt-2">Jhonarendra</h3>
-					<p class="text-center"><small>UserID: <i>jhonarendra</i></small></p>
-					<hr />
-					<div class="row m-2">
-						<div class="col-4">
-							Status
+				<div id="profile-wrapper" style="display: none">
+					<h3 class="text-warning page-title mt-3">PROFILE</h3>
+					<div class="profile-content">
+						<div class="profile-photo">
+							<img src="apple-touch-icon-180x180.png">
 						</div>
-						<div class="col-8">
-							: Testing
+						<h3 class="acc-name text-center mt-2">Jhonarendra</h3>
+						<p class="text-center"><small>UserID: <i>jhonarendra</i></small></p>
+						<hr />
+						<div class="row m-2">
+							<div class="col-4">
+								Status
+							</div>
+							<div class="col-8">
+								: Testing
+							</div>
 						</div>
-					</div>
-					<div class="row m-2">
-						<div class="col-4">
-							OS
+						<div class="row m-2">
+							<div class="col-4">
+								OS
+							</div>
+							<div class="col-8">
+								: Android, version
+							</div>
 						</div>
-						<div class="col-8">
-							: Android, version
-						</div>
-					</div>
 
-					<div class="row m-2">
-						<div class="col-4">
-							Hapus data transaksi
+						<div class="row m-2">
+							<div class="col-4">
+								Hapus data transaksi
+							</div>
+							<div class="col-8">
+								: <button class="btn btn-sm btn-danger m-1" onclick="clearTransaction()">Hapus</button>
+							</div>
 						</div>
-						<div class="col-8">
-							: <button class="btn btn-sm btn-danger m-1" onclick="clearTransaction()">Hapus</button>
-						</div>
-					</div>
 
-					<div class="row mt-4 m-2">
-						<div class="col-4">
-							
+						<div class="row mt-4 m-2">
+							<div class="col-4">
+								
+							</div>
+							<div class="col-8">
+								<button class="btn btn-sm btn-primary m-1">Open App in External Browser</button>
+								<button class="btn btn-sm btn-danger m-1">Logout</button>
+							</div>
 						</div>
-						<div class="col-8">
-							<button class="btn btn-sm btn-primary m-1">Open App in External Browser</button>
-							<button class="btn btn-sm btn-danger m-1">Logout</button>
-						</div>
-					</div>
 
+					</div>
+				</div>
+				
+				<div id="not-login">
+					<div class="alert alert-warning text-center mt-5 m-2">
+						<h3>Oops anda belum login</h3>
+						<p>Silahkan login dengan akun line anda untuk mengakses profil</p>
+						<p>
+							<button class="btn btn-primary">Login</button>
+						</p>
+					</div>
 				</div>
 				
 			</div>
