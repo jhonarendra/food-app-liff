@@ -140,7 +140,10 @@ function loadOrder(){
 			}
 			var ppn = parseInt(total_pesanan * 10 / 100)
 			var total_bayar = total_pesanan + ppn
-			data_order += `<div class="order-item my-2" onClick="setPage('cart')">
+
+			var date = new Date(order[i].tanggal)
+			date = date.getDate()+ ' ' + numToMonth(date.getMonth()) + ' ' + date.getFullYear() + ' pukul ' + date.getHours() + ':' + date.getMinutes()
+			data_order += `<div class="order-item my-2" onClick="showOrder(`+order[i].id+`)">
 							<div class="card">
 								<div class="card-body">
 									<div class="row">
@@ -153,15 +156,16 @@ function loadOrder(){
 											<hr class="m-0" />
 											<p class="text-right"><small>`+order[i].menu.length+` Item</small></p>
 										</div>
-										<div class="col-12">
-										</div>
-									</div>
-									<div class="row">
+
 										<div class="col-8 text-right">
 											<b>TOTAL</b>
 										</div>
 										<div class="col-4 text-right">
 											Rp `+formatRupiah(total_bayar)+`
+										</div>
+
+										<div class="col-12">
+											<small><i>Dipesan pada <b>`+date+`</b></i></small>
 										</div>
 									</div>
 								</div>
@@ -284,6 +288,7 @@ function addOrder(){
 	var index = 0
 	if (localStorage.order){
 		order = JSON.parse(localStorage.getItem('order'))
+		index = order.length
 	}
 	var timestamp = new Date
 	order_item = {
@@ -297,6 +302,52 @@ function addOrder(){
 	setPage('order')
 }
 
+function showOrder(id){
+	setPage('order-detail')
+	var order = JSON.parse(localStorage.getItem('order'))
+	var order_item = []
+	for (i in order){
+		if(order[i].id == id){
+			order_item = order[i]
+		}
+	}
+
+	var datetime = new Date(order_item.tanggal)
+	var date = datetime.getDate()+ ' ' + numToMonth(datetime.getMonth()) + ' ' + datetime.getFullYear()
+	var time = datetime.getHours() + ':' + datetime.getMinutes()
+	$("#tanggal-detail-order").html(date)
+	$("#jam-detail-order").html(time)
+
+	var data_order_detail = ''
+	var total_order_detail = 0
+	for (i in order_item.menu){
+		var nominal = order_item.menu[i].harga * order_item.menu[i].jumlah
+		total_order_detail = total_order_detail + nominal
+		data_order_detail += `<div class="order-detail-item row my-1">
+								<div class="col-4 pr-0">
+									<span class="menu-name">`+order_item.menu[i].nama+`</span>
+								</div>
+								<div class="col-3 px-0 text-right">
+									<span class="px-1">`+formatRupiah(order_item.menu[i].harga)+`</span>
+								</div>
+								<div class="col-2 px-0">
+									<span class="px-1"> x `+order_item.menu[i].jumlah+`</span>
+								</div>
+								<div class="col-3 pl-0 text-right">
+									`+formatRupiah(nominal)+`
+								</div>
+							</div>`
+	}
+	$("#order-detail-content").html(data_order_detail)
+	$("#total-order-detail").html(formatRupiah(total_order_detail))
+
+	var ppn = parseInt(total_order_detail * 10 / 100)
+	$("#ppn-order-detail").html(formatRupiah(ppn))
+
+	var total_bayar = total_order_detail + ppn
+	$("#total-bayar-order-detail").html(formatRupiah(total_bayar))
+}
+
 function setPage(menu) {
     if (menu == "home") {
     	loadCart()
@@ -305,6 +356,7 @@ function setPage(menu) {
         $('#order').hide()
         $('#account').hide()
         $('#cart').hide()
+        $('#order-detail').hide()
 
         $('#nav').show()
         $('#order-btn').hide()
@@ -315,6 +367,7 @@ function setPage(menu) {
         $('#order').hide()
         $('#account').hide()
         $('#cart').hide()
+        $('#order-detail').hide()
 
         $('#nav').show()
         $('#order-btn').hide()
@@ -325,6 +378,7 @@ function setPage(menu) {
         $('#order').show()
         $('#account').hide()
         $('#cart').hide()
+        $('#order-detail').hide()
 
         $('#nav').show()
         $('#order-btn').hide()
@@ -334,6 +388,7 @@ function setPage(menu) {
         $('#order').hide()
         $('#account').show()
         $('#cart').hide()
+        $('#order-detail').hide()
 
         $('#nav').show()
         $('#order-btn').hide()
@@ -344,9 +399,21 @@ function setPage(menu) {
         $('#order').hide()
         $('#account').hide()
         $('#cart').show()
+        $('#order-detail').hide()
 
         $('#nav').hide()
         $('#order-btn').show()
+    } else if (menu == "order-detail") {
+    	loadCart()
+        $('#home').hide()
+        $('#menu').hide()
+        $('#order').hide()
+        $('#account').hide()
+        $('#cart').hide()
+        $('#order-detail').show()
+
+        $('#nav').hide()
+        $('#order-btn').hide()
     }
 }
 
@@ -368,4 +435,22 @@ function formatRupiah(angka){
     
     rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
     return rupiah
+}
+
+function numToMonth(bulan) {
+    switch (bulan) {
+        case 1: bulan = "Januari"; break
+        case 2: bulan = "Februari"; break
+        case 3: bulan = "Maret"; break
+        case 4: bulan = "April"; break
+        case 5: bulan = "Mei"; break
+        case 6: bulan = "Juni"; break
+        case 7: bulan = "Juli"; break
+        case 8: bulan = "Agustus"; break
+        case 9: bulan = "September"; break
+        case 10: bulan = "Oktober"; break
+        case 11: bulan = "November"; break
+        case 12: bulan = "Desember"; break
+    }
+    return bulan
 }
