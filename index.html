@@ -4,7 +4,6 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="manifest" href="manifest.json">
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 	<link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
@@ -135,21 +134,21 @@
 				</div>
 			</div>
 			<div id="account" style="display: none">
-				<div id="profile-wrapper" style="display: none">
+				<div id="profile-wrapper">
 					<h3 class="text-warning page-title mt-3">PROFILE</h3>
 					<div class="profile-content">
-						<div class="profile-photo">
+						<div id="profile-photo" class="profile-photo">
 							<img src="apple-touch-icon-180x180.png">
 						</div>
-						<h3 class="acc-name text-center mt-2">Jhonarendra</h3>
-						<p class="text-center"><small>UserID: <i>jhonarendra</i></small></p>
+						<h3 id="profile-display-name" class="acc-name text-center mt-2">Jhonarendra</h3>
+						<p class="text-center"><small>UserID: <i id="profile-user-id">jhonarendra</i></small></p>
 						<hr />
 						<div class="row m-2">
 							<div class="col-4">
 								Status
 							</div>
 							<div class="col-8">
-								: Testing
+								: <span id="profile-status-msg">Testing</span>
 							</div>
 						</div>
 						<div class="row m-2">
@@ -175,20 +174,21 @@
 								
 							</div>
 							<div class="col-8">
-								<button class="btn btn-sm btn-primary m-1">Open App in External Browser</button>
-								<button class="btn btn-sm btn-danger m-1">Logout</button>
+								<button class="btn btn-sm btn-primary m-1" onclick="liffOpenWindow()">Open App in External Browser</button>
+								<button class="btn btn-sm btn-danger m-1" onclick="liffCloseApp()">Close App</button>
+								<button class="btn btn-sm btn-danger m-1" onclick="liffLogout()">Logout</button>
 							</div>
 						</div>
 
 					</div>
 				</div>
 				
-				<div id="not-login">
+				<div id="not-login" style="display: none">
 					<div class="alert alert-warning text-center mt-5 m-2">
 						<h3>Oops anda belum login</h3>
 						<p>Silahkan login dengan akun line anda untuk mengakses profil</p>
 						<p>
-							<button class="btn btn-primary">Login</button>
+							<button class="btn btn-primary" onclick="liffLogin()">Login</button>
 						</p>
 					</div>
 				</div>
@@ -331,5 +331,7 @@
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/script.js"></script>
+	<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+	<script src="js/liff-starter.js"></script>
 </body>
 </html>

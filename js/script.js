@@ -8,29 +8,6 @@ let menu = [
 	{ id: 7, nama: 'Pancakes', kategori: 'snack', harga: 9090, foto: 'PancakesandSausages.png'},
 	{ id: 8, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png'}
 ]
-// let cart = [
-// 	{ nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4}
-// ]
-
-// let order = [
-// 	{
-// 		id: 1,
-// 		tanggal: '12-12-2020 23:59:59',
-// 		menu: [
-// 			{ id: 2, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4},
-// 			{ id: 6, nama: 'Sprite', kategori: 'drink', harga: 5454, foto: 'Sprite.png', jumlah: 7}
-// 		]
-// 	},
-// 	{
-// 		id: 1,
-// 		tanggal: '12-12-2020 23:59:59',
-// 		menu: [
-// 			{ id: 6, nama: 'Sprite', kategori: 'drink', harga: 5454, foto: 'Sprite.png', jumlah: 7},
-// 			{ id: 2, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4},
-// 			{ id: 3, nama: 'Burger Keju', kategori: 'food', harga: 36363, foto: 'DoubleCheeseburger.png', jumlah: 14}
-// 		]
-// 	}
-// ]
 
 function loadData(){
 	setPage('home')
@@ -176,6 +153,33 @@ function loadOrder(){
 		data_order += `<div class="alert alert-warning m-2">Belum ada pesanan dari anda</div>`
 	}
 	$("#order-content").html(data_order)
+}
+
+function loadProfile(){
+	if(liff.isLoggedIn()){
+		$("#profile-wrapper").show()
+		$("#not-login").hide()
+		liff.getProfile().then(function(profile) {
+		    $('#profile-user-id').html(profile.userId)
+		    $('#profile-display-name').html(profile.displayName)
+
+		    const pp = $('#profile-photo');
+		    if (pp.firstElementChild) {
+		        pp.removeChild(pp.firstElementChild);
+		    }
+		    const img = document.createElement('img');
+		    img.src = profile.pictureUrl;
+		    img.alt = 'Profile Picture';
+		    pp.appendChild(img);
+
+		    $("#profile-status-msg").html(profile.statusMessage)
+		}).catch(function(error) {
+		    window.alert('Error: ' + error);
+		});
+	} else {
+		$("#profile-wrapper").hide()
+		$("#not-login").show()
+	}
 }
 
 function addToCart(id_menu){
@@ -354,6 +358,34 @@ function clearTransaction(){
 	alert('Data transaksi dihapus')
 }
 
+function liffOpenWindow(){
+	liff.openWindow({
+        url: '',
+        external: true
+    });
+}
+
+function liffCloseApp(){
+	if (!liff.isInClient()) {
+	    alert('Fungsi ini tidak tersedia pada browser eksternal');
+	} else {
+	    liff.closeWindow();
+	}
+}
+
+function liffLogin(){
+	if (!liff.isLoggedIn()) {
+	    liff.login();
+	}
+}
+
+function liffLogout(){
+	if (liff.isLoggedIn()) {
+	    liff.logout();
+	    window.location.reload()
+	}
+}
+
 function setPage(menu) {
     if (menu == "home") {
     	loadCart()
@@ -390,6 +422,7 @@ function setPage(menu) {
         $('#nav').show()
         $('#order-btn').hide()
     } else if (menu == "account") {
+    	loadProfile()
         $('#home').hide()
         $('#menu').hide()
         $('#order').hide()
@@ -461,3 +494,28 @@ function numToMonth(bulan) {
     }
     return bulan
 }
+
+
+// let cart = [
+// 	{ nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4}
+// ]
+
+// let order = [
+// 	{
+// 		id: 1,
+// 		tanggal: '12-12-2020 23:59:59',
+// 		menu: [
+// 			{ id: 2, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4},
+// 			{ id: 6, nama: 'Sprite', kategori: 'drink', harga: 5454, foto: 'Sprite.png', jumlah: 7}
+// 		]
+// 	},
+// 	{
+// 		id: 1,
+// 		tanggal: '12-12-2020 23:59:59',
+// 		menu: [
+// 			{ id: 6, nama: 'Sprite', kategori: 'drink', harga: 5454, foto: 'Sprite.png', jumlah: 7},
+// 			{ id: 2, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png', jumlah: 4},
+// 			{ id: 3, nama: 'Burger Keju', kategori: 'food', harga: 36363, foto: 'DoubleCheeseburger.png', jumlah: 14}
+// 		]
+// 	}
+// ]
