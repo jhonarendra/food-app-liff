@@ -177,7 +177,8 @@ function loadProfile(){
 		    }
 		    
 		}).catch(function(error) {
-		    window.alert('Error: ' + error);
+			$("#modal-message").html('Error: ' + error)
+			$("#modalAlert").modal('show')
 		});
 	} else {
 		$("#profile-wrapper").hide()
@@ -192,7 +193,8 @@ function addToCart(id_menu){
 		cart = JSON.parse(localStorage.getItem('cart'))
 		for (i in cart){
 			if(cart[i].id == id_menu){
-				alert('Menu sudah ditambahkan')
+				$("#modal-message").html('Menu sudah ada dalam keranjang')
+				$("#modalAlert").modal('show')
 				return false
 			}
 		}
@@ -339,18 +341,21 @@ function addOrder(){
 
 		
 		if (!liff.isInClient()) {
-			alert(msg_order)
+			$("#modal-message").html(msg_order)
+			$("#modalAlert").modal('show')
 		} else {
 			liff.sendMessages([{
 			    'type': 'text',
 			    'text': msg_order
 			}]).catch(function(error) {
-			    window.alert('Error sending message: ' + error);
+				$("#modal-message").html('Error sending message: ' + error)
+				$("#modalAlert").modal('show')
 			})
 		}
 		
 	} else {
-		alert('Anda belum memilih menu')
+		$("#modal-message").html('Anda belum memilih menu')
+		$("#modalAlert").modal('show')
 	}
 }
 
@@ -403,12 +408,15 @@ function showOrder(id){
 function clearTransaction(){
 	localStorage.removeItem('cart')
 	localStorage.removeItem('order')
-	alert('Data transaksi dihapus')
+
+	$("#modal-message").html('Data transaksi berhasil dihapus')
+	$("#modalAlert").modal('show')
 }
 
 function liffOpenWindow(){
 	if (!liff.isInClient()) {
-		alert('Fungsi ini tidak tersedia pada browser eksternal')
+		$("#modal-message").html('Fungsi ini tidak tersedia pada browser eksternal')
+		$("#modalAlert").modal('show')
 	} else {
 		liff.openWindow({
 	        url: 'https://liff.line.me/1655314108-3YBeQLy4',
@@ -419,7 +427,8 @@ function liffOpenWindow(){
 
 function liffCloseApp(){
 	if (!liff.isInClient()) {
-	    alert('Fungsi ini tidak tersedia pada browser eksternal')
+		$("#modal-message").html('Fungsi ini tidak tersedia pada browser eksternal')
+		$("#modalAlert").modal('show')
 	} else {
 	    liff.closeWindow()
 	}
@@ -434,7 +443,8 @@ function liffLogin(){
 function liffLogout(){
 	if (liff.isLoggedIn()) {
 		if (liff.isInClient()) {
-			alert('Fitur logout tersedia untuk browser eksternal')
+			$("#modal-message").html('Fitur logout tersedia untuk browser eksternal')
+			$("#modalAlert").modal('show')
 		} else {
 			liff.logout()
 			window.location.reload()
