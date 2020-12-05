@@ -9,8 +9,6 @@ let menu = [
 	{ id: 8, nama: 'Chicken Nugget', kategori: 'snack', harga: 9090, foto: 'ChickenNuggets.png'}
 ]
 
-let user = {}
-
 function loadData(){
 	setPage('home')
 	initialLoad()
@@ -163,7 +161,6 @@ function loadProfile(){
 		$("#not-login").hide()
 		liff.getProfile().then(function(profile) {
 			console.log(profile)
-			user = profile
 		    $('#profile-user-id').html(profile.userId)
 		    $('#profile-display-name').html(profile.displayName)
 		    $('#profile-photo img').attr('src', profile.pictureUrl)
@@ -307,8 +304,12 @@ function addOrder(){
 		// message
 		// Jhonarendra membuat pesanan baru! Burger 2, Pancake 3, Sprite 4 dengan total pesanan Rp 200.000
 		var msg_order = ''
-		if(user.displayName){
-			msg_order += user.displayName + ' membuat pesanan baru! '
+		if (liff.isLoggedIn()) {
+			liff.getProfile().then(function(profile) {
+				msg_order += user.displayName + ' membuat pesanan baru! '
+			}).catch(function(error) {
+			    window.alert('Error: ' + error);
+			})
 		} else {
 			msg_order += 'Anda membuat pesanan baru! '
 		}
@@ -339,9 +340,7 @@ function addOrder(){
 			liff.sendMessages([{
 			    'type': 'text',
 			    'text': msg_order
-			}]).then(function() {
-			    window.alert('Message sent');
-			}).catch(function(error) {
+			}]).catch(function(error) {
 			    window.alert('Error sending message: ' + error);
 			})
 		}
@@ -429,9 +428,7 @@ function liffLogin(){
 	    	liff.sendMessages([{
 	    	    'type': 'text',
 	    	    'text': "Yay! Anda berhasil login ke aplikasi! Terima kasih!"
-	    	}]).then(function() {
-	    	    window.alert('Message sent');
-	    	}).catch(function(error) {
+	    	}]).catch(function(error) {
 	    	    window.alert('Error sending message: ' + error);
 	    	})
 	    }
@@ -445,9 +442,7 @@ function liffLogout(){
 	    	liff.sendMessages([{
 	    	    'type': 'text',
 	    	    'text': "Anda berhasil keluar dari aplikasi. Sampai jumpa kembali."
-	    	}]).then(function() {
-	    	    window.alert('Message sent');
-	    	}).catch(function(error) {
+	    	}]).catch(function(error) {
 	    	    window.alert('Error sending message: ' + error);
 	    	})
 	    }
