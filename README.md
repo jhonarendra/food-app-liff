@@ -62,3 +62,9 @@ cart = JSON.parse(localStorage.getItem('cart'))
 - Testing app melalui web browser bisa mengakses di link https://liff.line.me/1655314108-3YBeQLy4
 - Melalui LINE bisa mengakses LINE OA saya dengan ID `@zrc5584x` (dengan @). Nanti message pembuka akan muncul link aplikasi
 - Atau coba di kolom chat lain dengan mengirim link `line://app/1655314108-3YBeQLy4`
+
+## Screenshot
+
+![](https://raw.githubusercontent.com/jhonarendra/food-app-liff/master/screenshot/screenshot-1.png)
+
+![](https://raw.githubusercontent.com/jhonarendra/food-app-liff/master/screenshot/overview.gif)
